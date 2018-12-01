@@ -40,7 +40,7 @@ public class Main {
         //int size = 10;
         //BellsTriangle(size);
 
-        ArrayList<Integer> arr1 = new ArrayList<>();
+      /*  ArrayList<Integer> arr1 = new ArrayList<>();
         ArrayList<Integer> arr2 = new ArrayList<>();
         arr1.add(1) ;
         arr1.add(5);
@@ -56,6 +56,32 @@ public class Main {
             System.err.println(e);
         }
         System.out.println(arr3);
+    */
+        ArrayList<Integer> arr1 = new ArrayList<>();
+        arr1.add(6);
+        arr1.add(7);
+        arr1.add(1) ;
+        arr1.add(5);
+
+        /*
+        ArrayList<ArrayList<Integer>> arr2 = new ArrayList<>();
+        arr2.add(arr1);
+        arr2.add(arr1);
+        arr2.add(arr1);
+        arr2.add(arr1);
+
+        System.out.println(arr2.get(0));
+        System.out.println(arr2.get(1));
+        System.out.println(arr2.get(2));
+        System.out.println(arr2.get(3));
+
+        spiralTraverse(arr2);
+        */
+
+        LinkedList<Integer> arr = new LinkedList<>();
+        arr.add(9); arr.add(5); arr.add(7); arr.add(1);
+        checkSort(arr1);
+        checkSort(arr);
     }
 
     public static <T extends  IPerson> void logAdding(Map set, Class clasz, int size)throws  Exception{
@@ -177,5 +203,110 @@ public class Main {
         }
 
         return merged;
+    }
+
+    public static void leftRight(ArrayList<Integer> l, int left, int right){
+        for(int i = left; i <= right; i++){
+            System.out.print(l.get(i) + " ");
+        }
+    }
+
+    public static void upDown(ArrayList<ArrayList<Integer>> list, int left, int right, int up, int down){
+        for(int i = up; i <= down; i++){
+            System.out.print(list.get(i).get(right)+ " ");
+        }
+    }
+
+    public static void rightLeft(ArrayList<Integer> l, int left, int right){
+        for(int i = right; i >= left; i--){
+            System.out.print(l.get(i) + " ");
+        }
+    }
+
+    public static void downUp(ArrayList<ArrayList<Integer>> list, int left, int right, int up, int down){
+        for(int i = down; i > up; i--){
+            System.out.print(list.get(i).get(left) + " ");
+        }
+    }
+
+    public static void spiralTraverse(ArrayList<ArrayList<Integer>> list){
+        int i = 0, size = list.size(), j = size;
+        while(i <= j){
+            leftRight(list.get(i), i, j-1);
+            //System.out.println("Done LR");
+            i++;
+            if(i <= j){
+                upDown(list, i, j-1, i, j-1);
+               // System.out.println("DONE UD");
+                j--;
+                if(i <= j){
+                    rightLeft(list.get(j), i-1, j-1);
+                    //System.out.println("DONE RL");
+                    downUp(list, i-1, j,i, j);
+                    //System.out.println("DONE DU");
+                }
+
+            }
+        }
+
+
+    }
+
+    public static void bubbleArray(List<Integer> list){
+
+        for(int i = 0; i < list.size(); i++){
+            for(int j = i + 1; j < list.size(); j++){
+
+                if(list.get(i) > list.get(j)){
+                    swap(list, i, j);
+                }
+            }
+        }
+    }
+
+    public static void swap(List<Integer> list, int left, int right){
+        Integer aux = list.get(left);
+        list.set(left, list.get(right));
+        list.set(right, aux);
+
+    }
+
+    public static int partition(List<Integer> list, int left, int right){
+        int iR = right;
+        int loc = left - 1;
+        for(int i = left; i < right; i++){
+            if(list.get(i) < list.get(iR)){
+                loc++;
+                swap(list, i, loc);
+            }
+        }
+        swap(list, loc + 1, iR);
+        return loc;
+    }
+    public static void quickSort(List<Integer> list, int left, int right){
+        if(left >= 0 && left < right){
+            Random rand = new Random();
+            int pivot = left + rand.nextInt(right - left + 1);
+            swap(list, pivot, right);
+            pivot = partition(list, left, right);
+           // System.out.print(pivot+ " ");
+            quickSort(list, left, pivot - 1);
+            quickSort(list, pivot, right);
+        }
+    }
+
+    public static void checkSort(List<Integer> list){
+
+        Instant start = Instant.now();
+        //bubbleArray(list);
+        quickSort(list, 0, list.size() - 1);
+        Iterator<Integer> it = list.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next() + " ");
+        }
+        Instant stop = Instant.now();
+        Duration duration = Duration.between(start, stop);
+        System.out.println(duration);
+
     }
 }
