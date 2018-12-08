@@ -82,6 +82,14 @@ public class Main {
         arr.add(9); arr.add(5); arr.add(7); arr.add(1);
         checkSort(arr1);
         checkSort(arr);
+
+        List<String> list = new LinkedList<>()
+        list.add("Geeks");
+        list.add("for");
+        list.add("geeks");
+        list.add("GeeksforGeeks");
+
+        Iterator<Integer>
     }
 
     public static <T extends  IPerson> void logAdding(Map set, Class clasz, int size)throws  Exception{
